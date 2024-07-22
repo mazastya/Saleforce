@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Product Search" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <lightning-input label="Name" value={name} onchange={handleNameChange}></lightning-input>
+            <lightning-input label="Description" value={description} onchange={handleDescriptionChange}></lightning-input>
+            <lightning-button label="Search" variant="brand" onclick={handleSearch}></lightning-button>
+            <template if:true={products}>
+                <template for:each={products} for:item="product">
+                    <p key={product.Id}>{product.Name} ({product.Family__c} - {product.Type__c})</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

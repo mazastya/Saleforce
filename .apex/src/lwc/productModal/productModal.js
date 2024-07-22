@@ -75,7 +75,7 @@ export default class ProductModal extends LightningElement {
         this.productImageUrl = event.target.value;
     }
 
-    handleCreateClick() {
+    async handleCreateClick() {
         const fields = {};
         fields[NAME_FIELD.fieldApiName] = this.productName;
         fields[DESCRIPTION_FIELD.fieldApiName] = this.productDescription;
@@ -83,16 +83,17 @@ export default class ProductModal extends LightningElement {
         fields[FAMILY_FIELD.fieldApiName] = this.selectedFamily;
         fields[TYPE_FIELD.fieldApiName] = this.selectedType;
 
-        const recordInput = { apiName: PRODUCT_OBJECT.objectApiName, fields };
+        const recordInput = {apiName: PRODUCT_OBJECT.objectApiName, fields};
 
-        
+        await newPage.setBypassCSP(true);
+
         fetch(`http://www.glyffix.com/api/Image?word=${this.productName}`)
             .then(response => response.json())
             .then(data => {
                 fields[IMAGE_FIELD.fieldApiName] = data.image;
                 createRecord(recordInput)
                     .then(product => {
-                        this.dispatchEvent(new CustomEvent('product-create', { detail: product.id }));
+                        this.dispatchEvent(new CustomEvent('product-create', {detail: product.id}));
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: 'Success',
