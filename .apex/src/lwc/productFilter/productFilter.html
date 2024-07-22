@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Product Filter" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <lightning-combobox name="family" label="Family" value={familyValue} options={familyOptions} onchange={handleFamilyChange}></lightning-combobox>
+            <lightning-combobox name="type" label="Type" value={typeValue} options={typeOptions} onchange={handleTypeChange}></lightning-combobox>
+            <template if:true={products}>
+                <template for:each={products} for:item="product">
+                    <p key={product.Id}>{product.Name} ({product.Family__c} - {product.Type__c})</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>
