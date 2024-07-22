@@ -9,9 +9,5 @@
       <option name="path" value="/src/lwc/productModal" />
       <option name="type" value="NEW" />
     </index-record>
-    <index-record>
-      <option name="path" value="/src/lwc/productModal/productModal.js" />
-      <option name="type" value="MODIFIED" />
-    </index-record>
   </component>
 </project>

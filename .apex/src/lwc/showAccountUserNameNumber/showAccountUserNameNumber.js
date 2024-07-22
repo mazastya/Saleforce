@@ -31,7 +31,7 @@ export default class ShowAccountUserNameNumber extends LightningElement {
         this.openModal = false;
     }
 
-    handleShowModal() {
-        this.template.querySelector('c-product-modal').openModal = true;
+    handleCreateClick() {
+        this.template.querySelector('c-product-modal').handleCreateClick();
     }
 }

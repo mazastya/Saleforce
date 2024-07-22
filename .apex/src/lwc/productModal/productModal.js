@@ -10,17 +10,45 @@ import IMAGE_FIELD from '@salesforce/schema/Product__c.Image__c';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 export default class ProductModal extends LightningElement {
+    @api isModalOpen = false;
+
     @track productName = '';
     @track productDescription = '';
     @track productPrice = 0;
-    @track productFamily = '';
-    @track productType = '';
+    @track selectedFamily;
+    @track selectedType;
     @track productImageUrl = '';
 
-    @api isModalOpen = false;
+    @track familyOptions = [];
+    @track typeOptions = [];
 
-    renderedCallback() {
-        // ничего делать не нужно, видимость окна управляется с помощью if:true в шаблоне
+    connectedCallback() {
+        this.initializePicklistOptions();
+    }
+
+    initializePicklistOptions() {
+        this.familyOptions = [
+            { label: 'Accessories', value: 'Accessories' },
+            { label: 'Computers', value: 'Computers' },
+            { label: 'Phones', value: 'Phones' },
+        ];
+
+        this.typeOptions = [
+            { label: 'Android', value: 'Android' },
+            { label: 'Apple', value: 'Apple' },
+            { label: 'Components', value: 'Components' },
+            { label: 'Desktop computer', value: 'Desktop computer' },
+            { label: 'Laptop', value: 'Laptop' },
+            { label: 'MacBook', value: 'MacBook' },
+        ];
+    }
+
+    handleShowModal() {
+        this.isModalOpen = true;
+    }
+
+    handleCloseModal() {
+        this.isModalOpen = false;
     }
 
     handleProductNameChange(event) {
@@ -35,12 +63,12 @@ export default class ProductModal extends LightningElement {
         this.productPrice = event.target.value;
     }
 
-    handleProductFamilyChange(event) {
-        this.productFamily = event.target.value;
+    handleFamilyChange(event) {
+        this.selectedFamily = event.detail.value;
     }
 
-    handleProductTypeChange(event) {
-        this.productType = event.target.value;
+    handleTypeChange(event) {
+        this.selectedType = event.detail.value;
     }
 
     handleProductImageUrlChange(event) {
@@ -52,39 +80,47 @@ export default class ProductModal extends LightningElement {
         fields[NAME_FIELD.fieldApiName] = this.productName;
         fields[DESCRIPTION_FIELD.fieldApiName] = this.productDescription;
         fields[PRICE_FIELD.fieldApiName] = this.productPrice;
-        fields[FAMILY_FIELD.fieldApiName] = this.productFamily;
-        fields[TYPE_FIELD.fieldApiName] = this.productType;
-        fields[IMAGE_FIELD.fieldApiName] = this.productImageUrl;
+        fields[FAMILY_FIELD.fieldApiName] = this.selectedFamily;
+        fields[TYPE_FIELD.fieldApiName] = this.selectedType;
 
         const recordInput = { apiName: PRODUCT_OBJECT.objectApiName, fields };
-        createRecord(recordInput)
-            .then(product => {
-                this.dispatchEvent(new CustomEvent('productcreate', { detail: product.id }));
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Product created',
-                        variant: 'success'
+
+        
+        fetch(`http://www.glyffix.com/api/Image?word=${this.productName}`)
+            .then(response => response.json())
+            .then(data => {
+                fields[IMAGE_FIELD.fieldApiName] = data.image;
+                createRecord(recordInput)
+                    .then(product => {
+                        this.dispatchEvent(new CustomEvent('product-create', { detail: product.id }));
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Success',
+                                message: 'Product created',
+                                variant: 'success'
+                            })
+                        );
+                        this.closeModal();
                     })
-                );
-                this.closeModal();
+                    .catch(error => {
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Error',
+                                message: error.body.message,
+                                variant: 'error'
+                            })
+                        );
+                    });
             })
             .catch(error => {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Error',
-                        message: error.body.message,
+                        message: error.message,
                         variant: 'error'
                     })
                 );
             });
     }
 
-    openModal() {
-        this.openModal = true;
-    }
-
-    closeModal() {
-        this.openModal = false;
-    }
 }

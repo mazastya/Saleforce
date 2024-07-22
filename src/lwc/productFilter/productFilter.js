@@ -2,15 +2,18 @@ import {LightningElement, track, wire} from 'lwc';
 import getProducts from '@salesforce/apex/GetProductController.getProducts';
 
 const FAMILY_OPTIONS = [
-    { label: 'Family 1', value: 'Family_1' },
-    { label: 'Family 2', value: 'Family_2' },
-    { label: 'Family 3', value: 'Family_3' },
+    { label: 'Accessories', value: 'Accessories' },
+    { label: 'Computers', value: 'Computers' },
+    { label: 'Phones', value: 'Phones' },
 ];
 
 const TYPE_OPTIONS = [
-    { label: 'Type 1', value: 'Type_1' },
-    { label: 'Type 2', value: 'Type_2' },
-    { label: 'Type 3', value: 'Type_3' },
+    { label: 'Android', value: 'Android' },
+    { label: 'Apple', value: 'Apple' },
+    { label: 'Components', value: 'Components' },
+    { label: 'Desktop computer', value: 'Desktop computer' },
+    { label: 'Laptop', value: 'Laptop' },
+    { label: 'MacBook', value: 'MacBook' },
 ];
 
 export default class ProductFilter extends LightningElement {

@@ -5,7 +5,7 @@
             <lightning-combobox name="type" label="Type" value={typeValue} options={typeOptions} onchange={handleTypeChange}></lightning-combobox>
             <template if:true={products}>
                 <template for:each={products} for:item="product">
-                    <p key={product.Id}>{product.Name} ({product.Family__c} - {product.Type__c})</p>
+                    <p key={product.Id}>{product.Name} ({product.Family__r.Name} - {product.Type__r.Name})</p>
                 </template>
             </template>
         </div>

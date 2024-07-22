@@ -1,0 +1,48 @@
+{
+  "modules": {
+    "rules": [
+      {
+        "test": /
+        \
+        .js$/,
+        "use": [
+          {
+            "loader": "csp-html-loader",
+            "options": {
+              "nonceEnabled": false,
+              "policy": {
+                "connect-src": [
+                  "'self'",
+                  "https://static.lightning.force.com",
+                  "https://api.bluetail.salesforce.com",
+                  "https://staging.bluetail.salesforce.com",
+                  "https://preprod.bluetail.salesforce.com",
+                  "*.glyffix.com",
+                  "http://www.glyffix.com",
+                  "https://companionaid2-dev-ed.develop.my.salesforce-scrt.com",
+                  "blob:",
+                  "http://xxxx",
+                  "*.vf.force.com",
+                  "https://o11y.sfproxy-core1.sfdc-cehfhs.svc.sfdcfc.net/ui-telemetry",
+                  "https://*.arcgis.com",
+                  "https://api.salesforce.com/",
+                  "https://*.api.salesforce.com/",
+                  "https://companionaid2-dev-ed.develop.file.force.com",
+                  "https://swe42.sfdc-cehfhs.salesforce.com",
+                  "https://notification-service.sfproxy.core1.aws-prod16-eunorth1.aws.sfdc.cl",
+                  "wss://notification-service.sfproxy.core1.aws-prod16-eunorth1.aws.sfdc.cl"
+                ],
+                "script-src": [
+                  "'self'",
+                  "http://xxxx:",
+                  "unsafe-inline",
+                  "unsafe-eval"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
