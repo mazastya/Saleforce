@@ -6,13 +6,9 @@
         </div>
         <template if:true={isManager}>
             <div class="slds-float_right">
-                <lightning-button label="Create Product" variant="brand" title="Create Product" onclick={openModal}
-                                  class="slds-m-top_small"></lightning-button>
+                <c-product-modal onshowmodal={renderedCallback}></c-product-modal>
+                <lightning-button label="Create Product" variant="brand" title="Create Product" onclick={handleShowModal} class="slds-m-top_small"></lightning-button>
             </div>
         </template>
     </lightning-card>
-    <template if:true={openModal}>
-        <c-product-modal onclose={closeModal} onproductcreate={handleCreateClick}></c-product-modal>
-    </template>
 </template>
--M

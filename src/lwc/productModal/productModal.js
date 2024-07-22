@@ -17,6 +17,11 @@ export default class ProductModal extends LightningElement {
     @track productType = '';
     @track productImageUrl = '';
 
+    @api isModalOpen = false;
+
+    renderedCallback() {
+    }
+
     handleProductNameChange(event) {
         this.productName = event.target.value;
     }
@@ -41,7 +46,6 @@ export default class ProductModal extends LightningElement {
         this.productImageUrl = event.target.value;
     }
 
-    @api
     handleCreateClick() {
         const fields = {};
         fields[NAME_FIELD.fieldApiName] = this.productName;
@@ -51,10 +55,10 @@ export default class ProductModal extends LightningElement {
         fields[TYPE_FIELD.fieldApiName] = this.productType;
         fields[IMAGE_FIELD.fieldApiName] = this.productImageUrl;
 
-        const recordInput = {apiName: PRODUCT_OBJECT.objectApiName, fields};
+        const recordInput = { apiName: PRODUCT_OBJECT.objectApiName, fields };
         createRecord(recordInput)
             .then(product => {
-                this.dispatchEvent(new CustomEvent('productcreate', {detail: product.id}));
+                this.dispatchEvent(new CustomEvent('productcreate', { detail: product.id }));
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
@@ -75,7 +79,11 @@ export default class ProductModal extends LightningElement {
             });
     }
 
+    openModal() {
+        this.openModal = true;
+    }
+
     closeModal() {
-        this.dispatchEvent(new CustomEvent('close'));
+        this.openModal = false;
     }
 }

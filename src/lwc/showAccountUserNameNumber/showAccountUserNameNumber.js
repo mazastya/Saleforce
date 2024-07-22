@@ -1,5 +1,5 @@
-import { LightningElement, wire, track } from 'lwc';
-import { getRecord } from 'lightning/uiRecordApi';
+import {LightningElement, track, wire} from 'lwc';
+import {getRecord} from 'lightning/uiRecordApi';
 import USER_ID from '@salesforce/user/Id';
 import NAME_FIELD from '@salesforce/schema/User.Name';
 import EMPLOYEE_NUMBER_FIELD from '@salesforce/schema/User.EmployeeNumber';
@@ -31,7 +31,7 @@ export default class ShowAccountUserNameNumber extends LightningElement {
         this.openModal = false;
     }
 
-    handleCreateClick() {
-        this.template.querySelector('c-product-modal').handleCreateClick();
+    handleShowModal() {
+        this.template.querySelector('c-product-modal').openModal = true;
     }
 }
